@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MenuDao" >
+    
+    <resultMap type="com.example.entity.MenuInfo" id="menuMap">
+    	<id property="menuId" column="firstMenuId" />
+    	<result property="menuName" column="firstmenuName" />
+    	<collection property="secondMenu" ofType="com.example.entity.MenuInfo" >
+    		    	<id property="menuId" column="menuId" />
+			    	<result property="menuName" column="menuName" />
+			    	<result property="parentId" column="parentId" />
+			    	<result property="url" column="url" />
+			    	<result property="menuDescribe" column="menuDescribe" />
+    	</collection>
+    </resultMap>
+    
+    <select id="selectMenuAll" resultMap="menuMap">
+        select m1.menuId as firstMenuId,m1.menuName as firstMenuName,m2.menuId,m2.menuName,m2.parentId,m2.url,m2.menuDescribe
+		from menuinfo m2 left join menuinfo m1
+		on m1.menuid = m2.parentid
+		where m2.parentId !='0'
+    </select>
+    
+    
+
+</mapper>

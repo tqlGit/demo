@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.PersonDao" >
+    
+    
+    <select id="selectPersonInfoList" resultType="com.example.entity.PersonInfo">
+        select pid,pname,mobile,birthday,infoDescribe
+		from test_person person LEFT JOIN test_info teinfo
+		on person.pid = teinfo.personId
+    </select>
+    
+    
+    <select id="selectPersonById" resultType="com.example.entity.Person">
+        select * from test_person where pid=#{id};
+    </select>
+    
+    <select id="selectPersonList" resultType="java.lang.Integer">
+        select COUNT(*) from test_person;
+    </select>
+    
+     <select id="selectPersonLists" resultType="com.example.entity.Person">
+        select * from test_person;
+    </select>
+    
+    <insert id="insertPerson">
+ 		insert into test_person(pname,mobile,birthday) 
+ 		values(#{person.pname},#{person.mobile},#{person.birthday,jdbcType=DATE});
+    </insert>
+
+</mapper>
